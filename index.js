@@ -117,6 +117,13 @@ const programAction = (dir, options) => {
     shell.sed('-i', '"author": ".*"', `"author": ""`, packageJson)
     shell.sed('-i', '"license": ".*"', `"license": ""`, packageJson)
 
+    if (options.yarn || isYarn()) {
+        let dockerfile = path.join(_path, 'Dockerfile');
+        shell.sed('-i', 'COPY package-lock.json.*', 'COPY yarn.lock ./', dockerfile);
+        shell.sed('-i', 'RUN npm install', 'RUN yarn', dockerfile);
+        shell.sed('-i', 'RUN npm run build', 'RUN yarn build', dockerfile);
+    }
+
     console.log(colors.green('complete!'))
 
     if (options.yarn || isYarn()) {
@@ -129,7 +136,7 @@ const programAction = (dir, options) => {
 
 program
     .name('create-my-express')
-    .version('0.1.0')
+    .version('0.1.1')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
     .option('-n, --name <name>', 'project-name')
