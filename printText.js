@@ -15,6 +15,7 @@ function instructionText(projectName) {
     console.log('npm' + colors.cyan(' start'), '\t\t: run the production server');
     console.log('npm' + colors.cyan(' lint'), '\t\t: lint the source');
     console.log('');
+    console.log('Happy hacking!');
 }
 
 function instructionTextYarn(projectName) {
@@ -32,6 +33,7 @@ function instructionTextYarn(projectName) {
     console.log('yarn' + colors.cyan(' start'), '\t\t: run the production server');
     console.log('yarn' + colors.cyan(' lint'), '\t\t: lint the source');
     console.log('');
+    console.log('Happy hacking!');
 }
 
 const truncateLog = (line, colorFn) => {
