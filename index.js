@@ -110,6 +110,7 @@ const programAction = (dir, options) => {
     let packageJson = path.join(_path, 'package.json')
 
     console.log(colors.cyan('update files'))
+
     console.log('package.json')
     shell.sed('-i', '"name": ".*"', `"name": "${appName}"`, packageJson)
     shell.sed('-i', '"description": ".*"', `"description": "created with create-my-express"`, packageJson)
@@ -146,7 +147,7 @@ const programAction = (dir, options) => {
 
 program
     .name('create-my-express')
-    .version('0.2.0')
+    .version('0.2.1')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
     .option('-G, --nogit', 'do not initialize a git repository')
