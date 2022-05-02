@@ -46,21 +46,21 @@ const truncateLog = (line, colorFn) => {
 
 const logo = () => {
     console.log();
-    truncateLog("          ____                                                                                             ");
-    truncateLog("        ,'  , `.                      ,---,.                                                               ");
-    truncateLog("     ,-+-,.' _ |                    ,'  .' |            ,-.----.                                           ");
-    truncateLog("  ,-+-. ;   , ||                  ,---.'   |            \\    /  \\   __  ,-.                                ");
-    truncateLog(" ,--.'|'   |  ;|                  |   |   .' ,--,  ,--, |   :    |,' ,'/ /|          .--.--.    .--.--.    ");
-    truncateLog("|   |  ,', |  ':     .--,         :   :  |-, |'. \\/ .`| |   | .\\ :'  | |' | ,---.   /  /    '  /  /    '   ");
-    truncateLog("|   | /  | |  ||   /_ ./|         :   |  ;/| '  \\/  / ; .   : |: ||  |   ,'/     \\ |  :  /`./ |  :  /`./   ");
-    truncateLog("'   | :  | :  |,, ' , ' :         |   :   .'  \\  \\.' /  |   |  \\ :'  :  / /    /  ||  :  ;_   |  :  ;_     ");
-    truncateLog(";   . |  ; |--'/___/ \\: |         |   |  |-,   \\  ;  ;  |   : .  ||  | ' .    ' / | \\  \\    `. \\  \\    `.  ");
-    truncateLog("|   : |  | ,    .  \\  ' |         '   :  ;/|  / \\  \\  \\ :     |`-';  : | '   ;   /|  `----.   \\ `----.   \\ ");
-    truncateLog("|   : '  |/      \\  ;   :         |   |    \\./__;   ;  \\:   : :   |  , ; '   |  / | /  /`--'  //  /`--'  / ");
-    truncateLog(";   | |`-'        \\  \\  ;         |   :   .'|   :/\\  \\ ;|   | :    ---'  |   :    |'--'.     /'--'.     /  ");
-    truncateLog("|   ;/             :  \\  \\        |   | ,'  `---'  `--` `---'.|           \\   \\  /   `--'---'   `--'---'   ");
-    truncateLog("'---'               \\  ' ;        `----'                  `---`            `----'                          ");
-    truncateLog("                     `--`                                                                                  ")
+    truncateLog("          ____                                                                                             ", colors.yellow);
+    truncateLog("        ,'  , `.                      ,---,.                                                               ", colors.yellow);
+    truncateLog("     ,-+-,.' _ |                    ,'  .' |            ,-.----.                                           ", colors.yellow);
+    truncateLog("  ,-+-. ;   , ||                  ,---.'   |            \\    /  \\   __  ,-.                                ", colors.yellow);
+    truncateLog(" ,--.'|'   |  ;|                  |   |   .' ,--,  ,--, |   :    |,' ,'/ /|          .--.--.    .--.--.    ", colors.yellow);
+    truncateLog("|   |  ,', |  ':     .--,         :   :  |-, |'. \\/ .`| |   | .\\ :'  | |' | ,---.   /  /    '  /  /    '   ", colors.yellow);
+    truncateLog("|   | /  | |  ||   /_ ./|         :   |  ;/| '  \\/  / ; .   : |: ||  |   ,'/     \\ |  :  /`./ |  :  /`./   ", colors.yellow);
+    truncateLog("'   | :  | :  |,, ' , ' :         |   :   .'  \\  \\.' /  |   |  \\ :'  :  / /    /  ||  :  ;_   |  :  ;_     ", colors.yellow);
+    truncateLog(";   . |  ; |--'/___/ \\: |         |   |  |-,   \\  ;  ;  |   : .  ||  | ' .    ' / | \\  \\    `. \\  \\    `.  ", colors.yellow);
+    truncateLog("|   : |  | ,    .  \\  ' |         '   :  ;/|  / \\  \\  \\ :     |`-';  : | '   ;   /|  `----.   \\ `----.   \\ ", colors.yellow);
+    truncateLog("|   : '  |/      \\  ;   :         |   |    \\./__;   ;  \\:   : :   |  , ; '   |  / | /  /`--'  //  /`--'  / ", colors.yellow);
+    truncateLog(";   | |`-'        \\  \\  ;         |   :   .'|   :/\\  \\ ;|   | :    ---'  |   :    |'--'.     /'--'.     /  ", colors.yellow);
+    truncateLog("|   ;/             :  \\  \\        |   | ,'  `---'  `--` `---'.|           \\   \\  /   `--'---'   `--'---'   ", colors.yellow);
+    truncateLog("'---'               \\  ' ;        `----'                  `---`            `----'                          ", colors.yellow);
+    truncateLog("                     `--`                                                                                  ", colors.yellow);
     console.log();
 }
 
