@@ -27,6 +27,7 @@ yarn create my-express name-of-app
 ```
 Options:
   -V, --version      output the version number
+  -G, --nogit        do not initialize a git repository
   -n, --name <name>  project-name
   -t, --typescript   generate typescript project template
   -y, --yarn         use yarn instead of npm

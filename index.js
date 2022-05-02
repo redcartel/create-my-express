@@ -40,20 +40,20 @@ function isYarn() {
 }
 
 const programAction = (dir, options) => {
-    const appName = options['name'] ?? createAppName(path.resolve(dir))
+    const appName = options['name'] ? options['name'] : createAppName(path.resolve(dir))
 
     if (!commandExists.sync('git')) {
-        console.error('git is not installed or found in PATH')
+        console.error(colors.red('git is not installed or found in PATH'))
         exit(1)
     }
 
-    if (options.yarn && !commandExists.sync('yarn')) {
-        console.error('yarn is not installed or found in PATH');
+    if ((options.yarn || isYarn()) && !commandExists.sync('yarn')) {
+        console.error(colors.red('yarn is not installed or found in PATH'));
         exit(1)
     }
 
     if (!options.yarn && !commandExists.sync('npm')) {
-        console.error('npm is not installed or in PATH');
+        console.error(colors.red('npm is not installed or found in PATH'));
         exit(1)
     }
 
@@ -63,7 +63,7 @@ const programAction = (dir, options) => {
     }
 
     if (!isEmptyDirectory(dir)) {
-        console.error('Must specify a new or empty directory')
+        console.error(colors.red('Must specify a new or empty directory'))
         exit(1)
     }
 
@@ -110,7 +110,7 @@ const programAction = (dir, options) => {
     let packageJson = path.join(_path, 'package.json')
 
     console.log(colors.cyan('update files'))
-
+    console.log('package.json')
     shell.sed('-i', '"name": ".*"', `"name": "${appName}"`, packageJson)
     shell.sed('-i', '"description": ".*"', `"description": "created with create-my-express"`, packageJson)
     shell.sed('-i', '"version": ".*"', `"version": "0.0.1"`, packageJson)
@@ -118,18 +118,22 @@ const programAction = (dir, options) => {
     shell.sed('-i', '"license": ".*"', `"license": ""`, packageJson)
 
     if (options.yarn || isYarn()) {
+        console.log('Dockerfile')
         let dockerfile = path.join(_path, 'Dockerfile');
         shell.sed('-i', 'COPY package-lock.json.*', 'COPY yarn.lock ./', dockerfile);
         shell.sed('-i', 'RUN npm install', 'RUN yarn', dockerfile);
         shell.sed('-i', 'RUN npm run build', 'RUN yarn build', dockerfile);
     }
 
-    console.log(colors.cyan('create initial commit'))
-
-    child_process.execSync('git init -b main', { stdio: [0, 1, 2], cwd: _path })
-    child_process.execSync('git add .', { stdio: [0, 1, 2], cwd: _path })
-    child_process.execSync('git commit -m "create-my-express template"', { stdio: [0, 1, 2], cwd: _path })
-
+    if (!options.nogit) {
+        try {
+            console.log(colors.cyan('initialize git repository'))
+            child_process.execSync('git init -b main', { stdio: [0, 1, 2], cwd: _path })
+        }
+        catch (e) {
+            console.error(colors.red('could not initialize git repository'))
+        }
+    }
     console.log(colors.green('complete!'))
 
     if (options.yarn || isYarn()) {
@@ -145,6 +149,7 @@ program
     .version('0.2.0')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
+    .option('-G, --nogit', 'do not initialize a git repository')
     .option('-n, --name <name>', 'project-name')
     .option('-t, --typescript', 'generate typescript project template')
     .option('-y, --yarn', 'use yarn instead of npm')
