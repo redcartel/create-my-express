@@ -36,6 +36,9 @@ Options:
 ## Generated Project Structure
 
 ```
+.env
+Dockerfile
+...
 /src
   /controllers
     /root
