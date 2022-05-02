@@ -124,6 +124,12 @@ const programAction = (dir, options) => {
         shell.sed('-i', 'RUN npm run build', 'RUN yarn build', dockerfile);
     }
 
+    console.log(colors.cyan('create initial commit'))
+
+    child_process.execSync('git init -b main', { stdio: [0, 1, 2], cwd: _path })
+    child_process.execSync('git add .', { stdio: [0, 1, 2], cwd: _path })
+    child_process.execSync('git commit -m "create-my-express template"', { stdio: [0, 1, 2], cwd: _path })
+
     console.log(colors.green('complete!'))
 
     if (options.yarn || isYarn()) {
@@ -136,7 +142,7 @@ const programAction = (dir, options) => {
 
 program
     .name('create-my-express')
-    .version('0.1.1')
+    .version('0.2.0')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
     .option('-n, --name <name>', 'project-name')
