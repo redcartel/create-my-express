@@ -129,7 +129,7 @@ const programAction = (dir, options) => {
 
 program
     .name('create-my-express')
-    .version('2.0.0+beta1')
+    .version('0.1.0')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
     .option('-n, --name <name>', 'project-name')
