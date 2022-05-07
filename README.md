@@ -3,6 +3,22 @@
 Generate a minimal, production-ready express template project
 
 Creates a new project from either either a [node express starter](https://github.com/redcartel/node-express-starter-2022) or a [typescript express starter](https://github.com/redcartel/node-express-typescript-starter-2022)
+
+## Features
+* Just the basics almost every project needs
+
+* `import x from "y"` module syntax
+
+* No assumptions about database, no html templating
+
+* Yarn support. Windows support
+
+* TypeScript option
+
+* Jest & supertest for testing endpoints
+
+* Dockerfile included
+
 ## Installation
 
 Install the CLI globally OR use npx:

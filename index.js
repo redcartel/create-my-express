@@ -147,7 +147,7 @@ const programAction = (dir, options) => {
 
 program
     .name('create-my-express')
-    .version('0.2.1')
+    .version('0.3.0')
     .description('Generate a minimal, production-ready express template project')
     .argument('<dir>')
     .option('-G, --nogit', 'do not initialize a git repository')
