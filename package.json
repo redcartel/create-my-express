@@ -1,6 +1,6 @@
 {
   "name": "create-my-express",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "bin": {
     "create-my-express": "index.js"
   },
@@ -15,10 +15,10 @@
     "test:typescript": "sh test.typescript.sh",
     "test:typescript:yarn": "sh test.typescript.yarn.sh",
     "test:yarn:typescript": "sh test.typescript.yarn.sh",
-    "test:all": "sh test.sh"
+    "test:all": "sh test.all.sh"
   },
   "author": "Carter Adams <carteradams@protonmail.com>",
-  "license": "MIT",
+  "license": "MIT-0",
   "keywords": [
     "express",
     "generator",
