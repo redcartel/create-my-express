@@ -116,7 +116,7 @@ const programAction = (dir, options) => {
     shell.sed('-i', '"description": ".*"', `"description": "created with create-my-express"`, packageJson)
     shell.sed('-i', '"version": ".*"', `"version": "0.0.1"`, packageJson)
     shell.sed('-i', '"author": ".*"', `"author": ""`, packageJson)
-    shell.sed('-i', '"license": ".*"', `"license": "MIT-0"`, packageJson)
+    shell.sed('-i', '"license": ".*"', `"license": ""`, packageJson)
 
     if (options.yarn || isYarn()) {
         console.log('Dockerfile')
