@@ -1,6 +1,6 @@
 {
   "name": "create-my-express",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "bin": {
     "create-my-express": "index.js"
   },

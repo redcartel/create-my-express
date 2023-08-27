@@ -69,6 +69,8 @@ const logo = () => {
     truncateLog("|   ;/             :  \\  \\        |   | ,'  `---'  `--` `---'.|           \\   \\  /   `--'---'   `--'---'   ", colors.yellow);
     truncateLog("'---'               \\  ' ;        `----'                  `---`            `----'                          ", colors.yellow);
     truncateLog("                     `--`                                                                                  ", colors.yellow);
+    truncateLog("")
+    truncateLog("  by Carter Adams (https://github.com/redcartel)", colors.yellow.bold)
     console.log();
 }
 
