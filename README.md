@@ -69,6 +69,8 @@ Dockerfile
 or a
 [typescript express starter](https://github.com/redcartel/node-express-typescript-starter-2022)
 
+## Etc.
+
 Help, contributions, and criticisms are very welcome.
 
 Thanks to [CJ R.](https://github.com/w3cj) who originally developed

@@ -133,7 +133,7 @@ const programAction = (dir, options) => {
     shell.sed('-i', '"version": ".*"', `"version": "0.0.1"`, packageJson)
     shell.sed('-i', '"author": ".*"', `"author": ""`, packageJson)
     shell.sed('-i', '"license": ".*"', `"license": "UNLICENSED"`, packageJson)
-    shell.sed('-i', '"private": .*', '"private": true', packageJson)
+    shell.sed('-i', '"private": [^,]*', '"private": true', packageJson)
 
     // if (options.pnpm || isPnpm()) {
     //     shell.sed('-i', /"cross-env":/d, packageJson)
