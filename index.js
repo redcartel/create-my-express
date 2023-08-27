@@ -17,6 +17,20 @@ var MODE_0755 = parseInt('0755', 8)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+function determineExecApp() {
+    const execPath = process.env['npm_execpath'];
+    if (!execPath) return 'npm';
+    if (execPath.match('yarn\.')) {
+        return 'yarn'
+    }
+    // else if (execPath.match('pnpm\.')) {
+    //     return 'pnpm'
+    // }
+    else {
+        return 'npm'
+    }
+}
+
 function createAppName(pathName) {
     return path.basename(pathName)
         .replace(/[^A-Za-z0-9.-]+/g, '-')
@@ -30,14 +44,12 @@ function isEmptyDirectory(dir) {
 }
 
 function isYarn() {
-    const exec = process.env.npm_execpath;
-    if (!exec) return false;
-    const execName = path.basename(exec);
-    if (execName.indexOf('yarn') > -1) {
-        return true;
-    }
-    return false;
+    return determineExecApp() === 'yarn'
 }
+
+// function isPnpm() {
+//     return determineExecApp() === 'pnpm'
+// }
 
 const programAction = (dir, options) => {
     const appName = options['name'] ? options['name'] : createAppName(path.resolve(dir))
@@ -48,12 +60,17 @@ const programAction = (dir, options) => {
     }
 
     if ((options.yarn || isYarn()) && !commandExists.sync('yarn')) {
-        console.error(colors.red('yarn is not installed or found in PATH'));
+        console.error(colors.red('yarn is not installed or found in PATH'))
         exit(1)
     }
 
-    if (!options.yarn && !commandExists.sync('npm')) {
-        console.error(colors.red('npm is not installed or found in PATH'));
+    // if (options.pnpm || isPnpm() && !commandExists.sync('pnpm')) {
+    //     console.error(colors.red('pnpm is not installed or found in PATH'))
+    //     exit(1)
+    // }
+
+    if (!options.yarn && /*!options.pnpm &&*/ !commandExists.sync('npm')) {
+        console.error(colors.red('npm is not installed or found in PATH'))
         exit(1)
     }
 
@@ -77,28 +94,27 @@ const programAction = (dir, options) => {
 
     const _path = path.join(process.cwd(), dir)
 
-    // FIXME: this isn't really working
-    //let spinner = ora().start();
-
     console.log(colors.cyan('clone template'))
     child_process.execSync(`git clone --depth=1 -b ${branch} ${repoUrl} ${_path}`, { stdio: [0, 1, 2] })
 
-    //spinner.stop()
-
     if (options.yarn || isYarn()) {
-        console.log(colors.cyan('create yarn.lock from package-lock.json'))
-        child_process.execSync('yarn import', {
-            cwd: _path,
-            stdio: [0, 1, 2]
-        })
         fs.rmSync(path.join(_path, 'package-lock.json'))
         console.log(colors.cyan('install packages'))
-        child_process.execSync('yarn install --force', {
+        child_process.execSync('yarn install', {
             cwd: _path,
             stdio: [0, 1, 2]
         })
         fs.copyFileSync(path.join(__dirname, 'PROJECT_README_YARN.md'), path.join(_path, 'README.md'))
     }
+    // else if (options.pnpm || isPnpm()) {
+    //     fs.rmSync(path.join(_path, 'package-lock.json'))
+    //     console.log(colors.cyan('install packages'))
+    //     child_process.execSync('pnpm install', {
+    //         cdw: _path,
+    //         stdio: [0, 1, 2]
+    //     })
+    //     fs.copyFileSync(path.join(__dirname, 'PROJECT_README_PNPM.md'), path.join(_path, 'README.md'))
+    // }
     else {
         console.log(colors.cyan('install packages'))
         child_process.execSync('npm i', { stdio: [0, 1, 2], cwd: _path })
@@ -116,15 +132,32 @@ const programAction = (dir, options) => {
     shell.sed('-i', '"description": ".*"', `"description": "created with create-my-express"`, packageJson)
     shell.sed('-i', '"version": ".*"', `"version": "0.0.1"`, packageJson)
     shell.sed('-i', '"author": ".*"', `"author": ""`, packageJson)
-    shell.sed('-i', '"license": ".*"', `"license": ""`, packageJson)
+    shell.sed('-i', '"license": ".*"', `"license": "UNLICENSED"`, packageJson)
+    shell.sed('-i', '"private": .*', '"private": true', packageJson)
+
+    // if (options.pnpm || isPnpm()) {
+    //     shell.sed('-i', /"cross-env":/d, packageJson)
+    //     shell.sed('-i', "cross-env", "", packageJson)
+    // }
 
     if (options.yarn || isYarn()) {
-        console.log('Dockerfile')
         let dockerfile = path.join(_path, 'Dockerfile');
         shell.sed('-i', 'COPY package-lock.json.*', 'COPY yarn.lock ./', dockerfile);
         shell.sed('-i', 'RUN npm install', 'RUN yarn', dockerfile);
         shell.sed('-i', 'RUN npm run build', 'RUN yarn build', dockerfile);
     }
+
+    // if (options.pnpm || isPnpm()) {
+    //     let dockerfile = path.join(_path, 'Dockerfile');
+    //     shell.sed('-i', 'COPY package-lock.json.*', 'COPY pnpm-lock.yaml ./', dockerfile);
+    //     shell.sed('-i', 'RUN npm install', 'RUN pnpm install', dockerfile);
+    //     shell.sed('-i', 'RUN npm run build', 'RUN pnpm build', dockerfile);
+    // }
+
+    let envSample = path.join(_path, '.env.sample')
+    let envFile = path.join(_path, '.env')
+
+    shell.cp(envSample, envFile);
 
     if (!options.nogit) {
         try {
@@ -140,6 +173,9 @@ const programAction = (dir, options) => {
     if (options.yarn || isYarn()) {
         printText.instructionTextYarn(dir)
     }
+    // else if (options.pnpm || isPnpm()) {
+    //     printText.instructionTextPnpm(dir)
+    // }
     else {
         printText.instructionText(dir)
     }
@@ -153,7 +189,8 @@ program
     .option('-G, --nogit', 'do not initialize a git repository')
     .option('-n, --name <name>', 'project-name')
     .option('-t, --typescript', 'generate typescript project template')
-    .option('-y, --yarn', 'use yarn instead of npm')
+    .option('-y, --yarn', 'use yarn (or run "yarn create my-express")')
+    // .option('-p, --pnpm', 'use pnpm')
     .showHelpAfterError()
     .action(programAction)
 

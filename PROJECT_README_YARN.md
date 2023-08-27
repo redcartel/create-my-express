@@ -1,8 +1,6 @@
 # create-my-express
 
 ```
-move or copy .env.sample to .env
-
 yarn dev               : run the local development server
 yarn test              : run the tests
 yarn test:watch        : continuously run tests as files update

@@ -1,8 +1,6 @@
 # create-my-express
 
 ```
-move or copy .env.sample to .env
-
 npm run dev            : run the local development server
 npm test               : run the tests
 npm run test:watch     : continuously run tests as files update

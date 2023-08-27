@@ -1,11 +1,11 @@
 {
   "name": "create-my-express",
-  "version": "0.5.0",
+  "version": "1.0.1",
   "bin": {
     "create-my-express": "index.js"
   },
   "type": "module",
-  "description": "Generate a minimal, production-ready express template project",
+  "description": "Create a minimal deployable express web api project in TypeScript or JavaScript",
   "main": "index.js",
   "scripts": {
     "start": "./index.js",
